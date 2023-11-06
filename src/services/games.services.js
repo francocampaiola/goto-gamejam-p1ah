@@ -30,8 +30,14 @@ async function createGame(game) {
     return newGame;
 }
 
+async function editGame(id, gameData) {
+    await client.connect();
+    return GamesCollection.updateOne({_id: new ObjectId(id)}, {$set: gameData});
+}
+
 export default {
   getGames,
   getGameById,
   createGame,
+  editGame
 };

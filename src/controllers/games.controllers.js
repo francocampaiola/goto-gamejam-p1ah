@@ -34,13 +34,36 @@ function getGameById(req, res) {
     });
 }
 
+/**
+ * Función que agrega un juego. Si lo consegui, lo retorna, de lo contrario, retorna un mensaje de error.
+ * @param {*} req
+ * @param {*} res
+ * @returns {Promise<Object>}
+ */
 async function createGame(req, res) {
   return GamesService.createGame(req.body)
-  .then ((game) => {
-    res.status(201).json(game);
+    .then((game) => {
+      res.status(201).json(game);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        msg: err.msg,
+      });
+    });
+}
+
+/**
+ * Función que edita un juego.
+ * @param {*} req 
+ * @param {*} res 
+ */
+async function editGame(req, res) {
+  GamesService.editGame(req.params.id, req.body)
+  .then( (game) => {
+    return res.status(200).json(game);
   })
-  .catch((err) => {
-    res.status(500).json({
+  .catch( (err) => {
+    return res.status(500).json({
       msg: err.msg
     })
   })
@@ -49,5 +72,6 @@ async function createGame(req, res) {
 export default {
   getGames,
   getGameById,
-  createGame
+  createGame,
+  editGame
 };
