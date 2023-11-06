@@ -69,9 +69,27 @@ async function editGame(req, res) {
   })
 }
 
+/**
+ * Función que elimina un juego.
+ * @param {*} req 
+ * @param {*} res 
+ */
+async function deleteGame(req, res) {
+  GamesService.deleteGame(req.params.id)
+  .then( (game) => {
+    return res.status(200).json(game);
+  })
+  .catch( (err) => {
+    return res.status(500).json({
+      msg: err.msg
+    })
+  })
+} 
+
 export default {
   getGames,
   getGameById,
   createGame,
-  editGame
+  editGame,
+  deleteGame
 };

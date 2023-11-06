@@ -23,6 +23,11 @@ async function getGameById(id) {
   return GamesCollection.findOne({ _id: new ObjectId(id)});
 }
 
+/**
+ * Se conecta a la base de datos de referencia y retorna el objeto creado.
+ * @param {object} game 
+ * @returns {Promise<Object>}
+ */
 async function createGame(game) {
     await client.connect();
     const newGame = { ...game }
@@ -30,14 +35,31 @@ async function createGame(game) {
     return newGame;
 }
 
+/**
+ * Se conecta a la base de datos de referencia y retorna el objeto modificado.
+ * @param {string} id 
+ * @param {object} gameData 
+ * @returns {Promise<Object>}
+ */
 async function editGame(id, gameData) {
     await client.connect();
     return GamesCollection.updateOne({_id: new ObjectId(id)}, {$set: gameData});
+}
+
+/**
+ * Se conecta a la base de datos de referencia y retorna el objeto eliminado.
+ * @param {string} id 
+ * @returns {Promise<Object>}
+ */
+async function deleteGame(id) {
+    await client.connect();
+    return GamesCollection.deleteOne({_id: new ObjectId(id)});
 }
 
 export default {
   getGames,
   getGameById,
   createGame,
-  editGame
+  editGame,
+  deleteGame
 };

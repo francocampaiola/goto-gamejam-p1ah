@@ -7,5 +7,6 @@ route.get("/games", GamesController.getGames);
 route.get("/games/:id", GamesController.getGameById);
 route.post("/games", GamesController.createGame);
 route.put("/games/:id", GamesController.editGame);
+route.delete("/games/:id", GamesController.deleteGame);
 
 export default route;
