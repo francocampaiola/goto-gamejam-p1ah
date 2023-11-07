@@ -1,16 +1,21 @@
-import yup from 'yup';
+import yup from "yup";
+
+// Genero constantes para cada error de manera genérica
+const requiredError = "Este campo es obligatorio";
+const positiveError = "El valor debe ser positivo";
+const integerError = "El valor debe ser un número entero";
+const stringError = "El valor debe ser un texto";
+const arrayError = "El valor debe ser un array";
 
 const createGameSchema = yup.object({
-    name: yup.string("El nombre del juego debe ser un string").required("El nombre del juego es un campo requerido."),
-    genre: yup.string("El género del juego debe ser un string").required("El género del juego es un campo requerido"),
-    members: yup.array("Los desarrolladores del juego deben estar contenidos en un array").required("Los desarrolladores del juego es un campo requerido"),
-    edition: yup.number("La edición del juego debe ser un número que indique el año de lanzamiento").required("La edición del juego es un campo requerido")
+  name: yup.string(stringError).required(requiredError),
+  genre: yup.string(stringError).required(requiredError),
+  members: yup.array(arrayError).of(yup.string(stringError)).required(requiredError),
+  edition: yup
+    .number(integerError)
+    .positive(positiveError)
+    .integer(integerError)
+    .required(requiredError),
 });
 
-export default {
-    createGameSchema
-}
-
-export {
-    createGameSchema
-}
+export { createGameSchema };
