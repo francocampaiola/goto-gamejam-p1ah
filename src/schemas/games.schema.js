@@ -1,6 +1,5 @@
 import yup from "yup";
 
-// Genero constantes para cada error de manera genérica
 const requiredError = "Este campo es obligatorio";
 const positiveError = "El valor debe ser positivo";
 const integerError = "El valor debe ser un número entero";
