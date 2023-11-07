@@ -10,9 +10,9 @@ function getGames(req, res) {
     .then((games) => {
       return res.status(200).json(games);
     })
-    .catch(() => {
+    .catch((err) => {
       return res.status(500).json({
-        msg: error.msg,
+        msg: err.msg,
       });
     });
 }
