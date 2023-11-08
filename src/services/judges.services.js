@@ -24,12 +24,23 @@ async function gamesVoted(id) {
   return VotesServices.gamesVoted(id);
 }
 
+/**
+ * Retorna un objeto con el voto almacenado
+ * @param {*} vote 
+ * @returns {Promise<Object>}
+ */
+async function generateVote(vote) {
+  return VotesServices.saveVote(vote);
+}
+
 export default {
   getJudgeById,
-  gamesVoted
+  gamesVoted,
+  generateVote
 };
 
 export {
   getJudgeById,
-  gamesVoted
+  gamesVoted,
+  generateVote
 };

@@ -17,8 +17,8 @@ async function gamesVoted(id) {
 
 /**
  * Se conecta a la base de datos de referencia y mediante el voto que recibe por parámetros, lo almacena en la base de datos para luego retornar un nuevo objeto con su correspondiente ID.
- * @param {string} vote 
- * @returns 
+ * @param {*} vote 
+ * @returns {Promise<Object>}
  */
 async function saveVote(vote) {
     await client.connect();
