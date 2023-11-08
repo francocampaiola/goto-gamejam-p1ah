@@ -1,24 +1,35 @@
 import { MongoClient, ObjectId } from "mongodb";
+import VotesServices from "./votes.services.js";
 
 const client = new MongoClient(process.env.MONGO_URI);
 const db = client.db(process.env.MONGO_DB);
 const JudgesCollection = db.collection("judges");
 
-async function getJudges() {
-  await client.connect();
-  return JudgesCollection.find().toArray();
-}
-
+/**
+ * Se conecta a la base de datos de referencia y retorna un juez según el ID, siempre y cuando lo encuentre.
+ * @param {string} id 
+ * @returns {Promise<Object>}
+ */
 async function getJudgeById(id) {
   await client.connect();
   return JudgesCollection.findOne({ _id: new ObjectId(id) });
 }
 
+/**
+ * Retorna una lista con los juegos votados por un juez a partir de su ID.
+ * @param {string} id
+ * @returns {Promise<Array>}
+ */
+async function gamesVoted(id) {
+  return VotesServices.gamesVoted(id);
+}
+
 export default {
-  getJudges,
   getJudgeById,
+  gamesVoted
 };
 
 export {
-    getJudges, getJudgeById
+  getJudgeById,
+  gamesVoted
 };
