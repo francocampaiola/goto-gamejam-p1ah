@@ -1,23 +1,6 @@
 import GamesServices from "../services/games.services.js";
 
 /**
- * Función que retorna todos los juegos
- * @param {*} req
- * @param {*} res
- */
-function getGames(req, res) {
-  GamesServices.getGames()
-    .then((games) => {
-      return res.status(200).json(games);
-    })
-    .catch((err) => {
-      return res.status(500).json({
-        msg: err.msg,
-      });
-    });
-}
-
-/**
  * Función que retorna un juego en función de su ID
  * @param {*} req
  * @param {*} res
@@ -99,10 +82,9 @@ async function updateGame(id_game, score) {
 }
 
 export default {
-  getGames,
   getGameById,
   createGame,
   editGame,
-  deleteGame,
-  updateGame
+  updateGame,
+  deleteGame
 };

@@ -5,15 +5,6 @@ const db = client.db(process.env.MONGO_DB);
 const GamesCollection = db.collection("games");
 
 /**
- * Se conecta a la base de datos de referencia y retorna un array con todos los juegos cargados.
- * @returns {Promise<Array>}
- */
-async function getGames() {
-  await client.connect();
-  return GamesCollection.find().toArray();
-}
-
-/**
  * Se conecta a la base de datos de referencia y retorna un objeto en función del ID solicitado.
  * @param {string} id
  * @returns {Promise<Object>}
@@ -57,7 +48,6 @@ async function deleteGame(id) {
 }
 
 export default {
-  getGames,
   getGameById,
   createGame,
   editGame,
