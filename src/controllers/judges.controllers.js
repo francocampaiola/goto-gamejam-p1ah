@@ -18,6 +18,11 @@ function getJudgeById(req, res) {
     });
 }
 
+/**
+ * Función que genera un voto de un juego siempre y cuando todo sea válido.
+ * @param {*} req 
+ * @param {*} res 
+ */
 function generateVote(req, res) {
   const vote = {
     id_judge: req.body.id_judge,
@@ -38,7 +43,7 @@ function generateVote(req, res) {
       const id_game = req.body.id_game;
 
       updateGame(id_game, score);
-      res.status(200).json(vote);
+      res.status(200).json(generatedVote);
     })
     .catch((err) => {
       res.status(500).json({
@@ -47,6 +52,11 @@ function generateVote(req, res) {
     });
 }
 
+/**
+ * Función que retorna un archivo JSON con los juegos votados por cada juez.
+ * @param {*} req 
+ * @param {*} res 
+ */
 function gamesVoted(req, res) {
   JudgesServices.gamesVoted(req.params.id)
     .then((vote) => {
@@ -68,10 +78,20 @@ function gamesVoted(req, res) {
     });
 }
 
+/**
+ * Función que actualiza un juego con la puntuación total a medida que va siendo votado.
+ * @param {string} id_game 
+ * @param {number} score 
+ */
 async function updateGame(id_game, score) {
   GamesControllers.updateGame(id_game, score);
 }
 
+/**
+ * Función que retorna, mediante el ID del juez, los votos que realizó este juez.
+ * @param {string} id 
+ * @returns 
+ */
 async function judgeVote(id) {
   return await JudgesServices.gamesVoted(id);
 }
@@ -82,3 +102,10 @@ export default {
   gamesVoted,
   judgeVote
 };
+
+export {
+  getJudgeById,
+  generateVote,
+  gamesVoted,
+  judgeVote
+}
