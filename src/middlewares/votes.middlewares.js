@@ -18,20 +18,19 @@ function validateVote(req, res, next) {
 }
 
 async function uniqueVote(req, res, next) {
-    try {
-        const votedGames = JudgesControllers.gamesVoted(req.body.id_judge);
+  try {
+    const votedGames = JudgesControllers.gamesVoted(req.body.id_judge);
 
-        const gameExist = votedGames.some (g => g.id_game === req.body.id_game);
+    const gameExist = votedGames.some((g) => g.id_game === req.body.id_game);
 
-        if (gameExist) {
-            res.status(400).json("Este juego ya ha sido calificado por este juez.")
-        } else {
-            next();
-        }
+    if (gameExist) {
+      res.status(400).json("Este juego ya ha sido calificado por este juez.");
+    } else {
+      next();
     }
-    catch (err) {
-        res.status(500).json("Error buscando al juego solicitado.");
-    }
+  } catch (err) {
+    res.status(500).json("Error buscando al juego solicitado.");
+  }
 }
 
 async function judgeExist(req, res, next) {
@@ -64,8 +63,9 @@ async function gameExist(req, res, next) {
 
 export default {
   validateVote,
+  uniqueVote,
   judgeExist,
-  gameExist,
+  gameExist
 };
 
-export { validateVote, judgeExist, gameExist };
+export { validateVote, judgeExist, gameExist, uniqueVote };
