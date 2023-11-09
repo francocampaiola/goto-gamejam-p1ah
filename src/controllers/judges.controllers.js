@@ -1,4 +1,5 @@
 import JudgesServices from "../services/judges.services.js";
+import GamesControllers from "./games.controllers.js";
 
 /**
  * Función que retorna todos los jueces
@@ -34,18 +35,6 @@ function getJudgeById(req, res) {
     });
 }
 
-/**
- * 
- *     id_judge: yup.string(stringError).required(requiredError),
-    name_judge: yup.string(stringError).required(requiredError),
-    id_game: yup.string(stringError).required(requiredError),
-    name_game: yup.string(stringError).required(requiredError),
-    gameplay: yup.number().integer(integerError).min(1, minNumberError).max(10, maxNumberError).required(requiredError),
-    art: yup.number().integer(integerError).min(1, minNumberError).max(10, maxNumberError).required(requiredError),
-    sound: yup.number().integer(integerError).min(1, minNumberError).max(10, maxNumberError).required(requiredError),
-    affinity: yup.number().integer(integerError).min(1, minNumberError).max(10, maxNumberError).required(requiredError)
- */
-
 function generateVote(req, res) {
   const vote = {
     id_judge: req.body.id_judge,
@@ -58,16 +47,56 @@ function generateVote(req, res) {
     affinity: req.body.affinity,
   };
 
-  JudgesServices.generateVote(vote).then((generatedVote) => {
-    const totalScore =
-      req.body.gameplay + req.body.art + req.body.sound + req.body.affinity;
+  JudgesServices.generateVote(vote)
+    .then((generatedVote) => {
+      const score =
+        req.body.gameplay + req.body.art + req.body.sound + req.body.affinity;
 
-    const idGame = req.body.id_game;
-    
-  });
+      const id_game = req.body.id_game;
+
+      updateGame(id_game, score);
+      res.status(200).json(vote);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        msg: err.msg,
+      });
+    });
+}
+
+function gamesVoted(req, res) {
+  JudgesServices.gamesVoted(req.params.id)
+    .then((vote) => {
+      const result = vote.map((r) => {
+        return {
+          name_game: r.name_game,
+          gameplay: r.gameplay,
+          art: r.art,
+          sound: r.sound,
+          affinity: r.affinity,
+        };
+      });
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        msg: err.msg,
+      });
+    });
+}
+
+async function updateGame(id_game, score) {
+  GamesControllers.updateGame(id_game, score);
+}
+
+async function judgeVote(id) {
+  return await JudgesServices.gamesVoted(id);
 }
 
 export default {
   getJudges,
   getJudgeById,
+  generateVote,
+  gamesVoted,
+  judgeVote
 };

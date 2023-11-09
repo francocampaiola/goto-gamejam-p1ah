@@ -1,4 +1,4 @@
-import GamesService from "../services/games.services.js";
+import GamesServices from "../services/games.services.js";
 
 /**
  * Función que retorna todos los juegos
@@ -6,7 +6,7 @@ import GamesService from "../services/games.services.js";
  * @param {*} res
  */
 function getGames(req, res) {
-  GamesService.getGames()
+  GamesServices.getGames()
     .then((games) => {
       return res.status(200).json(games);
     })
@@ -23,7 +23,7 @@ function getGames(req, res) {
  * @param {*} res
  */
 function getGameById(req, res) {
-  GamesService.getGameById(req.params.id)
+  GamesServices.getGameById(req.params.id)
     .then((game) => {
       return res.status(200).json(game);
     })
@@ -47,7 +47,7 @@ async function createGame(req, res) {
     edition: req.body.edition,
   };
 
-  GamesService.createGame(newGame)
+  GamesServices.createGame(newGame)
     .then((game) => {
       res.status(201).json(game);
     })
@@ -64,7 +64,7 @@ async function createGame(req, res) {
  * @param {*} res
  */
 async function editGame(req, res) {
-  GamesService.editGame(req.params.id, req.body)
+  GamesServices.editGame(req.params.id, req.body)
     .then((game) => {
       return res.status(200).json(game);
     })
@@ -81,7 +81,7 @@ async function editGame(req, res) {
  * @param {*} res
  */
 async function deleteGame(req, res) {
-  GamesService.deleteGame(req.params.id)
+  GamesServices.deleteGame(req.params.id)
     .then((game) => {
       return res.status(200).json(game);
     })
@@ -92,10 +92,17 @@ async function deleteGame(req, res) {
     });
 }
 
+async function updateGame(id_game, score) {
+  let game = await GamesServices.getGameById(id_game);
+  game.score += score;
+  GamesServices.editGame(id_game, game);
+}
+
 export default {
   getGames,
   getGameById,
   createGame,
   editGame,
   deleteGame,
+  updateGame
 };
