@@ -4,7 +4,6 @@ import JudgesControllers from '../controllers/judges.controllers.js';
 
 const route = express.Router();
 
-route.get("/judges", JudgesControllers.getJudges);
 route.get("/judges/:id", JudgesControllers.getJudgeById);
 // route.post("/vote", [validateVote], [judgeExist], [gameExist], [uniqueVote], JudgesControllers.)
 
