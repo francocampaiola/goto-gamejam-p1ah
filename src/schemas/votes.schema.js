@@ -17,4 +17,4 @@ const createVoteSchema = yup.object({
     affinity: yup.number().integer(integerError).min(1, minNumberError).max(10, maxNumberError).required(requiredError),
 })
 
-export { createVoteSchema };
+export default { createVoteSchema };
