@@ -2,6 +2,12 @@ import VoteSchema from "../schemas/votes.schema.js";
 import JudgesControllers from "../controllers/judges.controllers.js";
 import GamesControllers from "../controllers/games.controllers.js";
 
+/**
+ * Función que corrobora, a partir de su schema, que un voto sea válido.revisando todos los campos estén completos y acordes al tipo de dato esperado.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 function validateVote(req, res, next) {
   VoteSchema.createVoteSchema
     .validate(req.body, {
@@ -17,6 +23,12 @@ function validateVote(req, res, next) {
     });
 }
 
+/**
+ * Función que corrobora que el voto realizado no haya sido realizado previamente por el mismo juez para el mismo juego.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 async function uniqueVote(req, res, next) {
   try {
     const votedGames = JudgesControllers.gamesVoted(req.body.id_judge);
@@ -33,6 +45,12 @@ async function uniqueVote(req, res, next) {
   }
 }
 
+/**
+ * Función que corrobora que el juez exista fehacientemente.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 async function judgeExist(req, res, next) {
   try {
     const judge = JudgesControllers.getJudgeById(req.body.id_judge);
@@ -47,6 +65,12 @@ async function judgeExist(req, res, next) {
   }
 }
 
+/**
+ * Función que corrobora que el juego exista fehacientemente.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 async function gameExist(req, res, next) {
   try {
     const game = GamesControllers.getGameById(req.body.id_game);
