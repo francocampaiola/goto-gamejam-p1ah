@@ -18,6 +18,27 @@ function getGameById(req, res) {
 }
 
 /**
+ * Función que retorna una lista de juegos a partir de la edición
+ * @param {*} req 
+ * @param {*} res 
+ */
+function getGamesByEdition(req, res) {
+  GamesServices.getGamesByEdition(req.params.edition, {'genre': req.query.genre})
+  .then( (list) => {
+    res.status(200).json(list);
+  })
+  .catch( (err) => {
+    res.status(500).json({
+      msg: err.msg
+    })
+  })
+}
+
+function getGameAverage(req, res) {
+  GamesServices.games
+} 
+
+/**
  * Función que agrega un juego. Si lo consegui, lo retorna, de lo contrario, retorna un mensaje de error.
  * @param {*} req
  * @param {*} res
@@ -75,6 +96,11 @@ async function deleteGame(req, res) {
     });
 }
 
+/**
+ * Función que actualiza un juego incorporándole el score a partir de sus votaciones.
+ * @param {string} id_game 
+ * @param {number} score 
+ */
 async function updateGame(id_game, score) {
   let game = await GamesServices.getGameById(id_game);
   game.score += score;
@@ -83,6 +109,7 @@ async function updateGame(id_game, score) {
 
 export default {
   getGameById,
+  getGamesByEdition,
   createGame,
   editGame,
   updateGame,
