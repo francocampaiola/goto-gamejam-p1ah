@@ -58,7 +58,7 @@ function generateVote(req, res) {
  * @param {*} res 
  */
 function gamesVoted(req, res) {
-  JudgesServices.gamesVoted(req.params.id)
+  JudgesServices.votesByJudge(req.params.id)
     .then((vote) => {
       const result = vote.map((r) => {
         return {

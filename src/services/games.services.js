@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
+import VotesServices from '../services/votes.services.js'
 
 const client = new MongoClient(process.env.MONGO_URI);
 const db = client.db(process.env.MONGO_DB);
@@ -32,6 +33,11 @@ async function getGamesByEdition(edition, filter = {}) {
     .sort({ full_score: -1 })
     .toArray();
   return list;
+}
+
+async function getVotesByGame(id) {
+  await client.connect();
+  return VotesServices.votesByGame(id);
 }
 
 /**
@@ -73,9 +79,10 @@ async function deleteGame(id) {
 export default {
   getGameById,
   getGamesByEdition,
+  getVotesByGame,
   createGame,
   editGame,
   deleteGame,
 };
 
-export { getGameById, getGamesByEdition, createGame, editGame, deleteGame };
+export { getGameById, getGamesByEdition, getVotesByGame, createGame, editGame, deleteGame };

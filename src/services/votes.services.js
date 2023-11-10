@@ -6,27 +6,39 @@ const VotesCollection = db.collection("votes");
 
 /**
  * Se conecta a la base de datos de referencia y retorna una lista con todos los juegos votados por un juez a partir de su ID.
- * @param {string} id 
+ * @param {string} id
  * @returns {Promise<Array>}
  */
-async function gamesVoted(id) {
-    await client.connect();
-    const list = await VotesCollection.find({"id_judge" : id}).toArray();
-    return list;
+async function votesByJudge(id) {
+  await client.connect();
+  const list = await VotesCollection.find({ id_judge: id }).toArray();
+  return list;
+}
+
+/**
+ * Se conecta a la base de datos de referencia y retorna una lista con todos los votos que recibió un juego a partir de su ID.
+ * @param {string} id
+ * @returns {Promise<Array>}
+ */
+async function votesByGame(id) {
+  await client.connect();
+  const list = await VotesCollection.find({ id_game: id }).toArray();
+  return list;
 }
 
 /**
  * Se conecta a la base de datos de referencia y mediante el voto que recibe por parámetros, lo almacena en la base de datos para luego retornar un nuevo objeto con su correspondiente ID.
- * @param {*} vote 
+ * @param {*} vote
  * @returns {Promise<Object>}
  */
 async function saveVote(vote) {
-    await client.connect();
-    const newVote = {"_id": new ObjectId(), ...vote}
-    return await VotesCollection.insertOne(newVote);
+  await client.connect();
+  const newVote = { _id: new ObjectId(), ...vote };
+  return await VotesCollection.insertOne(newVote);
 }
 
 export default {
-    gamesVoted,
-    saveVote
-}
+  votesByJudge,
+  votesByGame,
+  saveVote,
+};
