@@ -6,12 +6,12 @@ const VotesCollection = db.collection("votes");
 
 async function getVotesByGame(id_game) {
   await client.connect();
-  return VotesCollection.find({ id_game: id_game }).toArray();
+  return await VotesCollection.find({ id_game: id_game }).toArray();
 }
 
 async function getVotesByJudge(id_judge) {
   await client.connect();
-  return VotesCollection.find({ id_judge: id_judge }).toArray();
+  return await VotesCollection.find({ id_judge: id_judge }).toArray();
 }
 
 async function createVote(vote) {

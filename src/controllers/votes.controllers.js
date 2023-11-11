@@ -36,6 +36,15 @@ function getVotesByJudge(req, res) {
 }
 
 /**
+ * Función que obtiene todos los votos que realizó un juez a partir de su ID.
+ * @param {*} id 
+ * @returns 
+ */
+async function getVotesMadeByJudge(id) {
+  return await VotesServices.getVotesByJudge(id);
+}
+
+/**
  * Función que obtiene el promedio de los votos que recibió un juego a partir de su ID.
  * @param {*} req 
  * @param {*} res 
@@ -90,7 +99,9 @@ function getAverageByGame(req, res) {
 function createVote(req, res) {
   const voteData = {
     id_judge: req.body.id_judge,
+    name_judge: req.body.name_judge,
     id_game: req.body.id_game,
+    name_game: req.body.name_game,
     gameplay: req.body.gameplay,
     art: req.body.art,
     sound: req.body.sound,
@@ -115,7 +126,8 @@ export default {
   getVotesByGame,
   getVotesByJudge,
   getAverageByGame,
+  getVotesMadeByJudge,
   createVote,
 };
 
-export { getVotesByGame, getVotesByJudge, getAverageByGame, createVote };
+export { getVotesByGame, getVotesByJudge, getAverageByGame, getVotesMadeByJudge, createVote };

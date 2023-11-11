@@ -17,15 +17,25 @@ function validateCreateVote(req, res, next) {
       next();
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json({
+        msg: err.msg,
+      });
     });
 }
 
+/**
+ * Función que verifica que un voto no haya sido realizado previamente por el mismo juez para el mismo juego.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 async function uniqueVote(req, res, next) {
   try {
-    const votedMade = VotesControllers.getVotesByJudge(req.body.id_judge);
+    const votesMade = await VotesControllers.getVotesMadeByJudge(req.body.id_judge);
 
-    if (!votedMade) {
+    const hasVotedInCompetition = votesMade.find(vote => vote.game_id == req.body.game_id)
+
+    if (!hasVotedInCompetition) {
       next();
     } else {
       res.status(400).json({
@@ -39,9 +49,15 @@ async function uniqueVote(req, res, next) {
   }
 }
 
+/**
+ * Función que verifica que un juez exista.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 function judgeExist(req, res, next) {
   try {
-    const judge = JudgesControllers.getJudgeById(req.body.id_judge);
+    const judge = JudgesControllers.judgeExist(req.body.id_judge);
 
     if (judge) {
       next();
@@ -57,15 +73,21 @@ function judgeExist(req, res, next) {
   }
 }
 
+/**
+ * Función que verifica si un juego existe.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 function gameExist(req, res, next) {
   try {
-    const game = GamesControllers.getGameById(req.body.game_id);
+    const game = GamesControllers.gameExist(req.body.game_id);
 
     if (game) {
       next();
     } else {
       res.status(400).json({
-        msg: "El juez indicado no existe.",
+        msg: "El juego indicado no existe.",
       });
     }
   } catch (err) {
