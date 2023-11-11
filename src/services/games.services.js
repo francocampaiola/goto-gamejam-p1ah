@@ -16,31 +16,6 @@ async function getGameById(id) {
 }
 
 /**
- * Se conecta a la base de datos de referencia y retorna una lista en función del filtro enviado por parámetros.
- * @param {number} edition
- * @param {*} filter
- * @returns
- */
-async function getGamesByEdition(edition, filter = {}) {
-  const filterMongo = { edition: parseInt(edition) };
-
-  if (filter?.genre) {
-    filterMongo.genre = filter.genre;
-  }
-
-  await client.connect();
-  const list = GamesCollection.find(filterMongo)
-    .sort({ full_score: -1 })
-    .toArray();
-  return list;
-}
-
-async function getVotesByGame(id) {
-  await client.connect();
-  return VotesServices.votesByGame(id);
-}
-
-/**
  * Se conecta a la base de datos de referencia y retorna el objeto creado.
  * @param {object} game
  * @returns {Promise<Object>}
@@ -78,11 +53,9 @@ async function deleteGame(id) {
 
 export default {
   getGameById,
-  getGamesByEdition,
-  getVotesByGame,
   createGame,
   editGame,
   deleteGame,
 };
 
-export { getGameById, getGamesByEdition, getVotesByGame, createGame, editGame, deleteGame };
+export { getGameById, createGame, editGame, deleteGame };
