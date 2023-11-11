@@ -50,9 +50,7 @@ async function getGameByEdition(edition, filter = {}) {
  */
 async function createGame(game) {
   await client.connect();
-  const newGame = { ...game };
-  await GamesCollection.insertOne(newGame);
-  return newGame;
+  return GamesCollection.insertOne(game);
 }
 
 /**
