@@ -1,4 +1,4 @@
-import createVoteSchema from "../schemas/votes.schema.js";
+import { createVoteSchema } from "../schemas/votes.schema.js";
 import JudgesControllers from "../controllers/judges.controllers.js";
 import GamesControllers from "../controllers/games.controllers.js";
 import VotesControllers from "../controllers/votes.controllers.js";
