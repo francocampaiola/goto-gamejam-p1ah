@@ -11,29 +11,31 @@ import VotesControllers from "../controllers/votes.controllers.js";
  */
 function validateCreateVote(req, res, next) {
   createVoteSchema
-    .validate(req.body, { abortEarly: false, stripUnknown: true })
+    .validate(req.body, { stripUnknown: true, abortEarly: false })
     .then(async (vote) => {
       req.body = vote;
       next();
     })
     .catch((err) => {
-      res.status(500).json({
-        msg: err.msg,
-      });
+      res.status(400).json(err);
     });
 }
 
 /**
  * Función que verifica que un voto no haya sido realizado previamente por el mismo juez para el mismo juego.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
-async function uniqueVote(req, res, next) {
+async function validateUniqueVote(req, res, next) {
   try {
-    const votesMade = await VotesControllers.getVotesMadeByJudge(req.body.id_judge);
+    const votesMade = await VotesControllers.getVotesMadeByJudge(
+      req.body.id_judge
+    );
 
-    const hasVotedInCompetition = votesMade.find(vote => vote.game_id == req.body.game_id)
+    const hasVotedInCompetition = votesMade.find(
+      (vote) => vote.game_id == req.body.game_id
+    );
 
     if (!hasVotedInCompetition) {
       next();
@@ -51,13 +53,13 @@ async function uniqueVote(req, res, next) {
 
 /**
  * Función que verifica que un juez exista.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
-function judgeExist(req, res, next) {
+async function validateJudgeExist(req, res, next) {
   try {
-    const judge = JudgesControllers.judgeExist(req.body.id_judge);
+    const judge = await JudgesControllers.judgeExist(req.body.id_judge);
 
     if (judge) {
       next();
@@ -75,13 +77,13 @@ function judgeExist(req, res, next) {
 
 /**
  * Función que verifica si un juego existe.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
-function gameExist(req, res, next) {
+async function validateGameExist(req, res, next) {
   try {
-    const game = GamesControllers.gameExist(req.body.game_id);
+    const game = await GamesControllers.gameExist(req.body.game_id);
 
     if (game) {
       next();
@@ -99,9 +101,9 @@ function gameExist(req, res, next) {
 
 export default {
   validateCreateVote,
-  uniqueVote,
-  judgeExist,
-  gameExist,
+  validateUniqueVote,
+  validateJudgeExist,
+  validateGameExist,
 };
 
-export { validateCreateVote, uniqueVote, judgeExist, gameExist };
+export { validateCreateVote, validateUniqueVote, validateJudgeExist, validateGameExist };

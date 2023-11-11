@@ -22,7 +22,7 @@ function getJudgeById(req, res) {
  * @param {*} req
  * @param {*} res
  */
-function judgeExist(req, res) {
+async function judgeExist(req, res) {
   JudgesServices.getJudgeById(req.body.id_judge)
     .then((judge) => {
       if (judge) {

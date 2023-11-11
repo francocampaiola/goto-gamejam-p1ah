@@ -55,7 +55,7 @@ function getGamesByEdition(req, res) {
  * @param {*} req
  * @param {*} res
  */
-function gameExist(req, res) {
+async function gameExist(req, res) {
   GamesServices.getGameById(req.body.game_id)
     .then((game) => {
       if (game) {
