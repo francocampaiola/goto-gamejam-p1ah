@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
-import VotesServices from '../services/votes.services.js'
+import VotesServices from "../services/votes.services.js";
 
 const client = new MongoClient(process.env.MONGO_URI);
 const db = client.db(process.env.MONGO_DB);
@@ -13,6 +13,16 @@ const GamesCollection = db.collection("games");
 async function getGameById(id) {
   await client.connect();
   return GamesCollection.findOne({ _id: new ObjectId(id) });
+}
+
+/**
+ * Se conecta a la base de datos de referencia y retorna una lista con los juegos obtenidos en función del género solicitado.
+ * @param {string} genre
+ * @returns {Promise<Array>}
+ */
+async function getGameByGenre(genre) {
+  await client.connect();
+  return GamesCollection.find({ genre: genre }).toArray();
 }
 
 /**
@@ -42,6 +52,20 @@ async function editGame(id, gameData) {
 }
 
 /**
+ * Se conecta a la base de datos de referencia y retorna el objeto modificado con el nuevo puntaje actualizado.
+ * @param {string} id
+ * @param {object} gameData
+ * @returns {Promise<Object>}
+ */
+async function editGameScore(id, gameData) {
+  await client.connect();
+  return GamesCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: gameData }
+  );
+}
+
+/**
  * Se conecta a la base de datos de referencia y retorna el objeto eliminado.
  * @param {string} id
  * @returns {Promise<Object>}
@@ -53,9 +77,18 @@ async function deleteGame(id) {
 
 export default {
   getGameById,
+  getGameByGenre,
   createGame,
   editGame,
+  editGameScore,
   deleteGame,
 };
 
-export { getGameById, createGame, editGame, deleteGame };
+export {
+  getGameById,
+  getGameByGenre,
+  createGame,
+  editGame,
+  editGameScore,
+  deleteGame,
+};
