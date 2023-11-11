@@ -26,6 +26,24 @@ async function getGameByGenre(genre) {
 }
 
 /**
+ * Se conecta a la base de datos de referencia y retorna una lista con los juegos obtenidos en función de la edición solicitada.
+ * @param {number} edition 
+ * @param {*} filter 
+ * @returns {Promise<Array>}
+ */
+async function getGameByEdition(edition, filter = {}) {
+  const filterParam = {"edition" : edition};
+  filterParam.edition = parseInt(edition);
+  
+  if (filter?.genre) {
+    filterParam.genre = filter.genre;
+  }
+
+  await client.connect();
+  return GamesCollection.find(filterParam).toArray();
+}
+
+/**
  * Se conecta a la base de datos de referencia y retorna el objeto creado.
  * @param {object} game
  * @returns {Promise<Object>}
@@ -78,6 +96,7 @@ async function deleteGame(id) {
 export default {
   getGameById,
   getGameByGenre,
+  getGameByEdition,
   createGame,
   editGame,
   editGameScore,
@@ -87,6 +106,7 @@ export default {
 export {
   getGameById,
   getGameByGenre,
+  getGameByEdition,
   createGame,
   editGame,
   editGameScore,

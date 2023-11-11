@@ -17,10 +17,31 @@ function getGameById(req, res) {
     });
 }
 
-async function getGamesByGenre(req, res) {
+function getGamesByGenre(req, res) {
   GamesServices.getGameByGenre(req.params.genre)
     .then((game) => {
       return res.status(200).json(game);
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        msg: err.msg,
+      });
+    });
+}
+
+/**
+ * Función que retorna una lista de juegos en función de su edición (año de lanzamiento) ordenados por su puntaje acumulado.
+ * También si se lo requiere, pueden ser filtrados por género.
+ * @param {*} req 
+ * @param {*} res 
+ */
+function getGamesByEdition(req, res) {
+  GamesServices.getGameByEdition(req.params.edition, {
+    genre: req.query.genre,
+  })
+    .then((game) => {
+      const gamesOrdered = game.sort((a, b) => b.score - a.score);
+      res.status(200).json(gamesOrdered);
     })
     .catch((err) => {
       return res.status(500).json({
@@ -36,8 +57,6 @@ async function getGamesByGenre(req, res) {
  */
 async function createGame(req, res) {
   const newGame = {
-    // Ver si corresponde sumar id también ❗️❗️❗️❗️❗️❗️❗️
-
     name: req.body.name,
     genre: req.body.genre,
     members: req.body.members,
@@ -108,6 +127,7 @@ async function deleteGame(req, res) {
 export default {
   getGameById,
   getGamesByGenre,
+  getGamesByEdition,
   createGame,
   editGame,
   editGameScore,
@@ -117,6 +137,7 @@ export default {
 export {
   getGameById,
   getGamesByGenre,
+  getGamesByEdition,
   createGame,
   editGame,
   editGameScore,
