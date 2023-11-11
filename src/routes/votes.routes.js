@@ -14,8 +14,8 @@ route.get("/:id/average", VotesControllers.getAverageByGame);
 route.post(
   "/:id/votes",
   [validateCreateVote],
-  [gameExist],
   [judgeExist],
+  [gameExist],
   [uniqueVote],
   VotesControllers.createVote
 );
