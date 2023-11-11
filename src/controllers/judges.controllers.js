@@ -1,5 +1,4 @@
 import JudgesServices from "../services/judges.services.js";
-import GamesControllers from "./games.controllers.js";
 
 /**
  * Función que retorna un juez en función de su ID
