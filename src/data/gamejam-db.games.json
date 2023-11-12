@@ -1,0 +1,100 @@
+[{
+  "name": "FC24",
+  "genre": "sports",
+  "members": [
+    "John Smith",
+    "Emma Johnson",
+    "David Wilson"
+  ],
+  "edition": 2023
+},
+{
+  "name": "Call of Duty: Warzone",
+  "genre": "first_person_shooter",
+  "members": [
+    "Olivia Davis",
+    "James Taylor",
+    "Sophia Walker"
+  ],
+  "edition": 2020
+},
+{
+  "name": "The Elder Scrolls V: Skyrim",
+  "genre": "role_playing",
+  "members": [
+    "Ethan White",
+    "Ava Martin",
+    "Lucas Harris"
+  ],
+  "edition": 2011
+},
+{
+  "name": "Minecraft",
+  "genre": "sandbox",
+  "members": [
+    "Oliver Clark",
+    "Sophie Turner",
+    "Benjamin Mitchell"
+  ],
+  "edition": 2011
+},
+{
+  "name": "Red Dead Redemption 2",
+  "genre": "action_adventure",
+  "members": [
+    "Liam Brown",
+    "Zoe Green",
+    "Leo Anderson"
+  ],
+  "edition": 2018
+},
+{
+  "name": "Fortnite",
+  "genre": "battle_royale",
+  "members": [
+    "Aiden Baker",
+    "Charlotte Lewis",
+    "Jackson King"
+  ],
+  "edition": 2017
+},
+{
+  "name": "Halo Infinite",
+  "genre": "first_person_shooter",
+  "members": [
+    "Ella Hall",
+    "Henry Allen",
+    "Grace Turner"
+  ],
+  "edition": 2021
+},
+{
+  "name": "Cyberpunk 2077",
+  "genre": "role_playing",
+  "members": [
+    "Noah Parker",
+    "Isabella White",
+    "Matthew Scott"
+  ],
+  "edition": 2020
+},
+{
+  "name": "The Witcher 3: Wild Hunt",
+  "genre": "role_playing",
+  "members": [
+    "Daniel Adams",
+    "Emily Wilson",
+    "Aiden Turner"
+  ],
+  "edition": 2015
+},
+{
+  "name": "Among Us",
+  "genre": "social_deduction",
+  "members": [
+    "Ava Martin",
+    "Lucas Harris",
+    "Sophie Turner"
+  ],
+  "edition": 2018
+}]
