@@ -17,6 +17,11 @@ function getGameById(req, res) {
     });
 }
 
+/**
+ * Función que retorna una lista de juegos en función de su género.
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getGamesByGenre(req, res) {
   GamesServices.getGameByGenre(req.params.genre)
     .then((game) => {
@@ -55,7 +60,7 @@ function getGamesByEdition(req, res) {
  * @param {*} req
  * @param {*} res
  */
-async function gameExist(req, res, id) {
+async function gameExist(res, id) {
   try {
     const game = await GamesServices.getGameById(id);
     return game !== null;

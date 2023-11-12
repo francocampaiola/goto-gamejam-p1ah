@@ -22,7 +22,7 @@ function getJudgeById(req, res) {
  * @param {*} req
  * @param {*} res
  */
-async function judgeExist(req, res, id) {
+async function judgeExist(res, id) {
   try {
     const judge = await JudgesServices.getJudgeById(id);
     return judge !== null;
