@@ -57,9 +57,28 @@ async function validateUniqueVote(req, res, next) {
  * @param {*} res
  * @param {*} next
  */
+// async function validateJudgeExist(req, res, next) {
+//   try {
+//     const id = req.body.id_judge;
+//     const judge = await JudgesControllers.judgeExist(id);
+
+//     if (judge) {
+//       next();
+//     } else {
+//       res.status(400).json({
+//         msg: "El juez indicado no existe.",
+//       });
+//     }
+//   } catch (err) {
+//     res.status(500).json({
+//       msg: err.msg,
+//     });
+//   }
+// }
 async function validateJudgeExist(req, res, next) {
   try {
-    const judge = await JudgesControllers.judgeExist(req.body.id_judge);
+    const id = req.body.id_judge;
+    const judge = await JudgesControllers.judgeExist(req, res, id);
 
     if (judge) {
       next();
@@ -75,15 +94,18 @@ async function validateJudgeExist(req, res, next) {
   }
 }
 
+
 /**
  * Función que verifica si un juego existe.
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
+
 async function validateGameExist(req, res, next) {
   try {
-    const game = await GamesControllers.gameExist(req.body.game_id);
+    const id = req.body.id_game;
+    const game = await GamesControllers.gameExist(req, res, id);
 
     if (game) {
       next();
@@ -94,10 +116,27 @@ async function validateGameExist(req, res, next) {
     }
   } catch (err) {
     res.status(500).json({
-      msg: err.msg,
+      msg: err.message,
     });
   }
 }
+// async function validateGameExist(req, res, next) {
+//   try {
+//     const game = await GamesControllers.gameExist(req.body.game_id);
+
+//     if (game) {
+//       next();
+//     } else {
+//       res.status(400).json({
+//         msg: "El juego indicado no existe.",
+//       });
+//     }
+//   } catch (err) {
+//     res.status(500).json({
+//       msg: err.msg,
+//     });
+//   }
+// }
 
 export default {
   validateCreateVote,

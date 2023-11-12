@@ -55,22 +55,15 @@ function getGamesByEdition(req, res) {
  * @param {*} req
  * @param {*} res
  */
-async function gameExist(req, res) {
-  GamesServices.getGameById(req.body.game_id)
-    .then((game) => {
-      if (game) {
-        return res.status(200).json(game);
-      } else {
-        return res.status(400).json({
-          msg: "El juego indicado no existe.",
-        });
-      }
-    })
-    .catch((err) => {
-      return res.status(500).json({
-        msg: err.msg,
-      });
+async function gameExist(req, res, id) {
+  try {
+    const game = await GamesServices.getGameById(id);
+    return game !== null;
+  } catch (err) {
+    res.status(500).json({
+      msg: err.message,
     });
+  }
 }
 
 /**
@@ -124,10 +117,10 @@ async function editGameScore(id, score) {
   const game = await GamesServices.getGameById(id);
 
   const newScore = {
-    score: (game.score += score),
+    score: game.score + score,
   };
 
-  GamesServices.editGameScore(id, newScore);
+  await GamesServices.editGameScore(id, newScore);
 }
 
 /**
