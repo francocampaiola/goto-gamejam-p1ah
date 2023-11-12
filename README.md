@@ -62,7 +62,8 @@ Podés crear un ```issue``` acá en el repositorio de GitHub.
 
 ## Para correr el entorno de desarrollo
 ```
-npm run dev
+Si estás en MacOS: npm run dev
+Si estás en Windows: npm run win dev
 ```
 
 ## ¿Cómo contribuir?
