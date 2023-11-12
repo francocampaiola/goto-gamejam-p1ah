@@ -21,7 +21,7 @@ async function getJudgeById(id) {
  * @returns {Promise<Array>}
  */
 async function gamesVoted(id) {
-  return VotesServices.votesByJudge(id);
+  return VotesServices.getVotesByJudge(id);
 }
 
 /**
